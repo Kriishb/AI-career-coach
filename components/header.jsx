@@ -1,9 +1,7 @@
-"use client";
 import {
   SignedIn,
   SignedOut,
   SignInButton,
-  SignUpButton,
   UserButton,
 } from "@clerk/nextjs";
 import Link from "next/link";
@@ -11,28 +9,24 @@ import React from "react";
 import { Button } from "./ui/button";
 import {
   ChevronDown,
-  FileText,
+  FileText, 
   GraduationCap,
   LayoutDashboard,
-  Moon,
   PenBox,
   StarsIcon,
-  Sun,
 } from "lucide-react";
-import { useTheme } from "next-themes";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { checkUser } from "@/lib/checkUser";
 
-const Header = () => {
-  const { setTheme } = useTheme();
+const Header = async () => {
 
+  await checkUser();
+  
   return (
     <header className="fixed top-0 w-full border-b bg-background/80 backdrop-blur-md z-50 supports-[backdrop-filter]:bg-background/60">
       <nav className="container mx-auto py-4 h-16 flex items-center justify-between">
@@ -43,35 +37,17 @@ const Header = () => {
         </Link>
 
         <div className="flex items-center space-x-2 md:space-x-4 ">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="icon">
-                <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-                <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => setTheme("light")}>
-                Light
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("dark")}>
-                Dark
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("system")}>
-                System
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          
           <SignedIn>
-            <Link href={"/dashboard"}>
-              <Button variant="outline">
+            <Link href="/dashboard">
+              <Button variant="outline" className="hidden md:inline-flex items-center gap-2">
                 <LayoutDashboard className="h-4 w-4" />
-                <span className="hidden md:block">Industry Insights</span>
+                Industry Insights
               </Button>
             </Link>
 
             <DropdownMenu>
-              <DropdownMenuTrigger>
+              <DropdownMenuTrigger asChild>
                 <Button>
                   <StarsIcon className="h-4 w-4" />
                   <span className="hidden md:block">Growth Tools</span>
@@ -80,14 +56,14 @@ const Header = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem>
-                  <Link href={"/resume"} className="flex items-center gap-2">
+                  <Link href="/resume" className="flex items-center gap-2">
                     <FileText className="h-4 w-4" />
                     <span>Build Resume</span>
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <Link
-                    href={"/ai-cover-letter"}
+                    href="/ai-cover-letter"
                     className="flex items-center gap-2"
                   >
                     <PenBox className="h-4 w-4" />
@@ -95,7 +71,7 @@ const Header = () => {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Link href={"/interview"} className="flex items-center gap-2">
+                  <Link href="/interview" className="flex items-center gap-2">
                     <GraduationCap className="h-4 w-4" />
                     <span>Interview prep</span>
                   </Link>
@@ -106,7 +82,7 @@ const Header = () => {
 
           <SignedOut>
             <SignInButton>
-              <Button variant="outline" className={"cursor-pointer"}>Sign In</Button>
+              <Button variant="outline" className="cursor-pointer">Sign In</Button>
             </SignInButton>
           </SignedOut>
           {/* Show the user button when the user is signed in */}
