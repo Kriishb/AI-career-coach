@@ -14,7 +14,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -29,6 +28,7 @@ import {
 import useFetch from "@/hooks/use-fetch";
 import { onboardingSchema } from "@/app/lib/schema";
 import { updateUser } from "@/actions/user";
+import { Label } from "@/components/ui/label";
 
 const OnboardingForm = ({ industries }) => {
   const router = useRouter();
@@ -77,7 +77,7 @@ const OnboardingForm = ({ industries }) => {
 
   return (
     <div className="flex items-center justify-center bg-background">
-      <Card className="w-full max-w-lg mt-10 mx-2">
+      <Card className="w-full max-w-[512px] mt-10 mx-2">
         <CardHeader>
           <CardTitle className="gradient-title text-4xl">
             Complete Your Profile
@@ -99,7 +99,7 @@ const OnboardingForm = ({ industries }) => {
                   );
                   setValue("subIndustry", "");
                 }}
-              >
+              > 
                 <SelectTrigger id="industry">
                   <SelectValue placeholder="Select an industry" />
                 </SelectTrigger>
